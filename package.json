@@ -1,0 +1,37 @@
+{
+  "name": "vue-ellipsis",
+  "version": "1.0.0",
+  "description": "a substr component of vue2.js",
+  "main": "dist/vue-ellipsis.common.js",
+  "jsnext:main": "dist/vue-ellipsis.es2015.js",
+  "scripts": {
+    "build": "node build/build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jypblue/vue-ellipsis.git"
+  },
+  "keywords": [
+    "vue2",
+    "ellipsis"
+  ],
+  "author": "zx.wang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jypblue/vue-ellipsis/issues"
+  },
+  "homepage": "https://github.com/jypblue/vue-ellipsis#readme",
+  "devDependencies": {
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-es2015-loose-rollup": "^7.0.0",
+    "generate-release": "^0.11.0",
+    "jasmine-core": "^2.5.2",
+    "replace-in-file": "^2.5.0",
+    "rollup": "^0.41.6",
+    "rollup-plugin-babel": "^2.7.1",
+    "uglify-js": "^2.8.15"
+  }
+}

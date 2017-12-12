@@ -1,1 +1,1 @@
-# vue-clamp
+# vue-ellipsis
