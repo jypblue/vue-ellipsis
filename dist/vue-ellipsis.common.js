@@ -1,7 +1,7 @@
 
   /* !
 
-  * vue-ellipsis v1.0.0
+  * vue-ellipsis v1.0.2
 
   * https://github.com/jypblue/vue-ellipsis
 
@@ -16,7 +16,6 @@
 /**
  * @author zx.wang(zx.wang1991@gmail.com)
  * @version 1.0.0
- * @param
  */
 
 function plugin(Vue) {
@@ -31,16 +30,17 @@ function plugin(Vue) {
         default: ''
       },
       lineClamp: {
-        type: [Number],
+        type: Number,
         default: 1
       },
       lineHeight: {
-        type: [String],
-        default: ''
+        type: String,
+        default: '22px'
       }
     },
     methods: {
       handleSubstrSentence: function () {
+
         var stNode = this.$refs.sentence;
         var html = this.data;
         if (html.length === 0) {
@@ -52,14 +52,15 @@ function plugin(Vue) {
         var startPos = 0;
         var endPos = html.length;
         // css 必须设置line-height 不然会报错
-        var stNodeStyles = window.getComputedStyle(stNode, null);
+        //let stNodeStyles = window.getComputedStyle(stNode, null)
         var stNodeHeight = stNode.getBoundingClientRect().height || 22;
-        var stNodeLineHeight = stNodeStyles.lineHeight;
-        stNodeLineHeight = stNodeLineHeight.slice(0, stNodeLineHeight.length - 2);
-        if (this.lineHeight) {
-          stNodeLineHeight = !!this.lineHeight.indexOf('px') ? this.lineHeight.slice(0, this.lineHeight.length - 2) : this.lineHeight;
-        }
+        // let stNodeLineHeight = stNodeStyles.lineHeight
+        // stNodeLineHeight = stNodeLineHeight.slice(0, stNodeLineHeight.length - 2)
+        // if (!!this.lineHeight) {
+        //   stNodeLineHeight = !!this.lineHeight.indexOf('px') ? this.lineHeight.slice(0, this.lineHeight.length - 2) : this.lineHeight
+        // }
 
+        var stNodeLineHeight = this.lineHeight.slice(0, this.lineHeight.length - 2);
         var maxHeight = stNodeLineHeight * this.lineClamp;
 
         if (stNodeHeight <= maxHeight) {
@@ -79,12 +80,12 @@ function plugin(Vue) {
           }
 
           while (stNodeHeight > maxHeight) {
-            var _newhtml2 = stNode.innerHTML.substring(0, stNode.innerHTML.length - 1);
+            var _newhtml2 = stNode.innerHTML.substring(0, stNode.innerHTML.trimRight().length - 1);
             stNode.innerHTML = _newhtml2;
             stNodeHeight = stNode.getBoundingClientRect().height || 22;
           }
 
-          var newhtml = stNode.innerHTML.substring(0, stNode.innerHTML.length - 3) + '...';
+          var newhtml = stNode.innerHTML.substring(0, stNode.innerHTML.trimRight().length - 3) + '...';
           stNode.innerHTML = newhtml;
         }
       }

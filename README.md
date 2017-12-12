@@ -30,7 +30,7 @@ $ bower install vue-ellipsis
 |------------|----------------|--------------------|--------------|
 | data | 需要添加省略号的内容 | String | 无   |
 | line-clamp  | 显示几行 | Number | 1  |
-| line-height | 单行高度  | String | 无   |
+| line-height | 单行高度(设定时与实际单行高度一致，若使用rem请自行计算转换)  | String | '22px'   |
 
 
 ## How To Use
@@ -48,7 +48,7 @@ Component Use:
 
 ## Update Log
 
-- version 1.0.0 => add basic functions, substring multiline sentence and add '...'
+- version 1.0.x => add basic functions, substring multiline sentence and add '...'
 
 
 ## License
