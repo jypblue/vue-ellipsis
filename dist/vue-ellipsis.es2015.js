@@ -29,20 +29,18 @@ function plugin(Vue) {
         default: ''
       },
       lineClamp: {
-        type: [String, Number],
+        type: [Number],
         default: 1
       },
       lineHeight: {
-        type: [String, Number],
+        type: [String],
         default: ''
       }
     },
     methods: {
       handleSubstrSentence: function () {
-        debugger;
         var stNode = this.$refs.sentence;
         var html = this.data;
-        console.log(stNode.style.lineHeight);
         if (html.length === 0) {
           return false;
         }
@@ -57,10 +55,10 @@ function plugin(Vue) {
         var stNodeLineHeight = stNodeStyles.lineHeight;
         stNodeLineHeight = stNodeLineHeight.slice(0, stNodeLineHeight.length - 2);
         if (this.lineHeight) {
-          stNodeLineHeight = this.lineHeight.indexOf('px') ? this.lineHeight.slice(0, this.lineHeight.length - 2) : this.lineHeight;
+          stNodeLineHeight = !!this.lineHeight.indexOf('px') ? this.lineHeight.slice(0, this.lineHeight.length - 2) : this.lineHeight;
         }
 
-        var maxHeight = stNodeLineHeight * parseInt(this.lineClamp, 10);
+        var maxHeight = stNodeLineHeight * this.lineClamp;
 
         if (stNodeHeight <= maxHeight) {
           return false;

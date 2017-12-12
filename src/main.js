@@ -16,20 +16,18 @@
         default: ''
       },
       lineClamp: {
-        type: [String, Number],
+        type: [Number],
         default: 1
       },
       lineHeight: {
-        type: [String, Number],
+        type: [String],
         default: ''
       }
     },
     methods: {
       handleSubstrSentence () {
-        debugger
         const stNode = this.$refs.sentence
         let html = this.data
-        console.log(stNode.style.lineHeight)
         if (html.length === 0) {
           return false
         }
@@ -44,10 +42,10 @@
         let stNodeLineHeight = stNodeStyles.lineHeight
         stNodeLineHeight = stNodeLineHeight.slice(0, stNodeLineHeight.length - 2)
         if (this.lineHeight) {
-          stNodeLineHeight = this.lineHeight.indexOf('px') ? this.lineHeight.slice(0, this.lineHeight.length - 2) : this.lineHeight
+          stNodeLineHeight = !!this.lineHeight.indexOf('px') ? this.lineHeight.slice(0, this.lineHeight.length - 2) : this.lineHeight
         }
 
-        const maxHeight = stNodeLineHeight * parseInt(this.lineClamp, 10)
+        const maxHeight = stNodeLineHeight * this.lineClamp
 
         if (stNodeHeight <= maxHeight) {
           return false

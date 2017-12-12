@@ -30,7 +30,7 @@ $ bower install vue-ellipsis
 |------------|----------------|--------------------|--------------|
 | data | 需要添加省略号的内容 | String | 无   |
 | line-clamp  | 显示几行 | Number | 1  |
-| line-height | 单行高度  | String/Number | 无   |
+| line-height | 单行高度  | String | 无   |
 
 
 ## How To Use
@@ -42,9 +42,14 @@ import VueEllipsis from 'vue-ellipsis'
 Vue.use(VueEllipsis)
 
 Component Use:
-<ellipsis :data="msg" :line-clamp="2" :line-height="22px/22"></ellipsis>
+<ellipsis :data="msg" :line-clamp="2" :line-height="'24px'"></ellipsis>
 
 ```
+
+## Update Log
+
+- version 1.0.0 => add basic functions, substring multiline sentence and add '...'
+
 
 ## License
 
