@@ -1,2 +1,19 @@
-build
-bower.json
+{
+	"name": "vue-ellipsis",
+	"main": "dist/vue-ellipsis.js",
+	"version": "1.0.0",
+	"description": "a multiline sentence ellipsis component of vue2.js",
+	"homepage": "https://github.com/jypblue/vue-ellipsis#readme",
+	"license": "MIT",
+	"keywords": [
+		"ellipsis",
+		"vue",
+		"vue2.js"
+	],
+	"ignore": [
+		".*",
+		"build",
+		"example",
+		"package.json"
+	]
+}
