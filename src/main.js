@@ -21,6 +21,14 @@
       lineHeight: {
         type: String,
         default: '22px'
+      },
+      endChar: {
+        type: String,
+        default: '...'
+      },
+      endHtml: {
+        type: String,
+        default: ''
       }
     },
     methods: {
@@ -70,9 +78,18 @@
             stNodeHeight = stNode.getBoundingClientRect().height || 22
           }
 
-          const newhtml = stNode.innerHTML.substring(0, stNode.innerHTML.trimRight().length - 3) + '...'
+          const endStr = !!this.endHtml ? this.endHtml.replace(/<[^>]+>/g,"") : ''
+          const endLen = endStr.length + this.endChar.length
+          // 计算被截掉部分的空格
+          const stNodeLen = stNode.innerHTML.trimRight().length;
+          const stNodeDelStr = stNode.innerHTML.substring(stNodeLen - endLen, stNodeLen);
+          const extraLen = stNodeDelStr.match(/\s+/g).length;
+          const newhtml = stNode.innerHTML.substring(0, stNodeLen - endLen - extraLen) + this.endChar + this.endHtml
           stNode.innerHTML = newhtml
         }
+      },
+      handleClick(e) {
+        this.$emit('click', e)
       }
     },
     watch: {
@@ -84,7 +101,7 @@
       this.handleSubstrSentence()
     },
     template: `
-    <div ref="sentence"></div>
+    <div ref="sentence" @click="handleClick"></div>
     `
    })
 

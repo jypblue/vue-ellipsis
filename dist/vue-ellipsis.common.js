@@ -36,6 +36,14 @@ function plugin(Vue) {
       lineHeight: {
         type: String,
         default: '22px'
+      },
+      endChar: {
+        type: String,
+        default: '...'
+      },
+      endHtml: {
+        type: String,
+        default: ''
       }
     },
     methods: {
@@ -85,9 +93,18 @@ function plugin(Vue) {
             stNodeHeight = stNode.getBoundingClientRect().height || 22;
           }
 
-          var newhtml = stNode.innerHTML.substring(0, stNode.innerHTML.trimRight().length - 3) + '...';
+          var endStr = !!this.endHtml ? this.endHtml.replace(/<[^>]+>/g, "") : '';
+          var endLen = endStr.length + this.endChar.length;
+          // 计算被截掉部分的空格
+          var stNodeLen = stNode.innerHTML.trimRight().length;
+          var stNodeDelStr = stNode.innerHTML.substring(stNodeLen - endLen, stNodeLen);
+          var extraLen = stNodeDelStr.match(/\s+/g).length;
+          var newhtml = stNode.innerHTML.substring(0, stNodeLen - endLen - extraLen) + this.endChar + this.endHtml;
           stNode.innerHTML = newhtml;
         }
+      },
+      handleClick: function (e) {
+        this.$emit('click', e);
       }
     },
     watch: {
@@ -99,7 +116,7 @@ function plugin(Vue) {
       this.handleSubstrSentence();
     },
 
-    template: '\n    <div ref="sentence"></div>\n    '
+    template: '\n    <div ref="sentence" @click="handleClick"></div>\n    '
   });
 }
 
