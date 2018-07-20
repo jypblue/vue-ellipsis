@@ -63,9 +63,12 @@ handleClick: click callback function
 
 ## Update Log
 
-- version 1.0.x => add basic functions: substring multiline sentence and add '...'.
+- version 1.1.1 => fix a bug about str length can't get.
 
 - version 1.1.x => add user-defined ending string; add user-defined ending html; add click callback function.
+
+- version 1.0.x => add basic functions: substring multiline sentence and add '...'.
+
 
 
 ## License
