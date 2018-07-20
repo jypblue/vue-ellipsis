@@ -63,7 +63,7 @@ handleClick: click callback function
 
 ## Update Log
 
-- version 1.1.1 => fix a bug about str length can't get.
+- version 1.1.2 => fix a bug about str length can't get.
 
 - version 1.1.x => add user-defined ending string; add user-defined ending html; add click callback function.
 
