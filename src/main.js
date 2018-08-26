@@ -36,6 +36,7 @@
         const stNode = this.$refs.sentence;
         const html = this.data;
         if (html.length === 0) {
+          throw new Error('the String is empty');
           return false;
         }
         stNode.innerHTML = html;
@@ -54,9 +55,7 @@
         const stNodeLineHeight = this.lineHeight.slice(0, this.lineHeight.length - 2);
         const maxHeight = stNodeLineHeight * this.lineClamp;
 
-        if (stNodeHeight <= maxHeight) {
-          return false;
-        } else {
+        if (stNodeHeight > maxHeight) {
           while (Math.abs(endPos - startPos) > 1) {
             const half = Math.ceil((endPos + startPos) / 2, 10);
             const newHtml = html.substring(0, half);
@@ -77,7 +76,7 @@
           }
 
           const endStr = !!this.endHtml ? this.endHtml.replace(/<[^>]+>/g,"") : ''
-          const endLen = this.endChar === '...' ? 1 : endStr.length + this.endChar.length;
+          const endLen = this.endChar === '...' ? 3 : endStr.length + this.endChar.length;
           // 计算被截掉部分的空格
           const stNodeLen = stNode.innerHTML.trimRight().length;
           const stNodeDelStr = stNode.innerHTML.substring(stNodeLen - endLen, stNodeLen);

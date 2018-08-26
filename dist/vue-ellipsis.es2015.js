@@ -1,7 +1,7 @@
 
   /* !
 
-  * vue-ellipsis v1.1.1
+  * vue-ellipsis v1.1.2
 
   * https://github.com/jypblue/vue-ellipsis
 
@@ -49,6 +49,7 @@ function plugin(Vue) {
         var stNode = this.$refs.sentence;
         var html = this.data;
         if (html.length === 0) {
+          throw new Error('the String is empty');
           return false;
         }
         stNode.innerHTML = html;
@@ -67,9 +68,7 @@ function plugin(Vue) {
         var stNodeLineHeight = this.lineHeight.slice(0, this.lineHeight.length - 2);
         var maxHeight = stNodeLineHeight * this.lineClamp;
 
-        if (stNodeHeight <= maxHeight) {
-          return false;
-        } else {
+        if (stNodeHeight > maxHeight) {
           while (Math.abs(endPos - startPos) > 1) {
             var half = Math.ceil((endPos + startPos) / 2, 10);
             var _newHtml = html.substring(0, half);
@@ -90,7 +89,7 @@ function plugin(Vue) {
           }
 
           var endStr = !!this.endHtml ? this.endHtml.replace(/<[^>]+>/g, "") : '';
-          var endLen = this.endChar === '...' ? 1 : endStr.length + this.endChar.length;
+          var endLen = this.endChar === '...' ? 3 : endStr.length + this.endChar.length;
           // 计算被截掉部分的空格
           var stNodeLen = stNode.innerHTML.trimRight().length;
           var stNodeDelStr = stNode.innerHTML.substring(stNodeLen - endLen, stNodeLen);
