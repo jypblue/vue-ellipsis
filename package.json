@@ -1,6 +1,6 @@
 {
   "name": "vue-ellipsis",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "a substr component of vue2.js",
   "main": "dist/vue-ellipsis.common.js",
   "jsnext:main": "dist/vue-ellipsis.es2015.js",

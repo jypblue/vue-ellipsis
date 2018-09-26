@@ -1,7 +1,7 @@
 
   /* !
 
-  * vue-ellipsis v1.0.2
+  * vue-ellipsis v1.1.0
 
   * https://github.com/jypblue/vue-ellipsis
 
@@ -73,7 +73,7 @@ function plugin(Vue) {
           return false;
         } else {
           while (Math.abs(endPos - startPos) > 1) {
-            var half = Math.ceil((endPos + startPos) / 2, 10);
+            var half = Math.ceil((endPos + startPos) / 2);
             var _newhtml = html.substring(0, half);
             stNode.innerHTML = _newhtml;
             stNodeHeight = stNode.getBoundingClientRect().height || 22;

@@ -60,7 +60,7 @@
           return false
         } else {
           while (Math.abs(endPos - startPos) > 1) {
-            const half = Math.ceil((endPos + startPos) / 2, 10)
+            const half = Math.ceil((endPos + startPos) / 2)
             const newhtml = html.substring(0, half)
             stNode.innerHTML = newhtml
             stNodeHeight = stNode.getBoundingClientRect().height || 22
