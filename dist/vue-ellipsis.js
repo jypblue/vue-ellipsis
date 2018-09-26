@@ -1,7 +1,7 @@
 
   /* !
 
-  * vue-ellipsis v1.1.0
+  * vue-ellipsis v1.1.4
 
   * https://github.com/jypblue/vue-ellipsis
 
@@ -52,14 +52,13 @@ function plugin(Vue) {
     },
     methods: {
       handleSubstrSentence: function () {
-
         var stNode = this.$refs.sentence;
         var html = this.data;
         if (html.length === 0) {
+          throw new Error('the String is empty');
           return false;
         }
         stNode.innerHTML = html;
-
         // 开始及结束位置
         var startPos = 0;
         var endPos = html.length;
@@ -75,15 +74,12 @@ function plugin(Vue) {
         var stNodeLineHeight = this.lineHeight.slice(0, this.lineHeight.length - 2);
         var maxHeight = stNodeLineHeight * this.lineClamp;
 
-        if (stNodeHeight <= maxHeight) {
-          return false;
-        } else {
+        if (stNodeHeight > maxHeight) {
           while (Math.abs(endPos - startPos) > 1) {
             var half = Math.ceil((endPos + startPos) / 2);
-            var _newhtml = html.substring(0, half);
-            stNode.innerHTML = _newhtml;
+            var newhtml = html.substring(0, half);
+            stNode.innerHTML = newhtml;
             stNodeHeight = stNode.getBoundingClientRect().height || 22;
-
             if (stNodeHeight <= maxHeight) {
               startPos = half;
             } else {
@@ -92,19 +88,20 @@ function plugin(Vue) {
           }
 
           while (stNodeHeight > maxHeight) {
-            var _newhtml2 = stNode.innerHTML.substring(0, stNode.innerHTML.trimRight().length - 1);
-            stNode.innerHTML = _newhtml2;
+            var _newHtml = stNode.innerHTML.substring(0, stNode.innerHTML.trimRight().length - 1);
+            stNode.innerHTML = _newHtml;
             stNodeHeight = stNode.getBoundingClientRect().height || 22;
           }
 
           var endStr = !!this.endHtml ? this.endHtml.replace(/<[^>]+>/g, "") : '';
-          var endLen = endStr.length + this.endChar.length;
+          var endLen = this.endChar === '...' ? 3 : endStr.length + this.endChar.length;
           // 计算被截掉部分的空格
           var stNodeLen = stNode.innerHTML.trimRight().length;
           var stNodeDelStr = stNode.innerHTML.substring(stNodeLen - endLen, stNodeLen);
-          var extraLen = stNodeDelStr.match(/\s+/g).length;
-          var newhtml = stNode.innerHTML.substring(0, stNodeLen - endLen - extraLen) + this.endChar + this.endHtml;
-          stNode.innerHTML = newhtml;
+          var match = stNodeDelStr.match(/\s+/g);
+          var extraLen = match && match.length ? match.length : 0;
+          var newHtml = stNode.innerHTML.substring(0, stNodeLen - endLen - extraLen) + this.endChar + this.endHtml;
+          stNode.innerHTML = newHtml;
         }
       },
       handleClick: function (e) {

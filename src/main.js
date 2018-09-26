@@ -33,59 +33,56 @@
     },
     methods: {
       handleSubstrSentence () {
-
-        const stNode = this.$refs.sentence
-        const html = this.data
+        const stNode = this.$refs.sentence;
+        const html = this.data;
         if (html.length === 0) {
-          return false
+          throw new Error('the String is empty');
+          return false;
         }
-        stNode.innerHTML = html
-
+        stNode.innerHTML = html;
         // 开始及结束位置
-        let startPos = 0
-        let endPos = html.length
+        let startPos = 0;
+        let endPos = html.length;
         // css 必须设置line-height 不然会报错
         //let stNodeStyles = window.getComputedStyle(stNode, null)
-        let stNodeHeight = stNode.getBoundingClientRect().height || 22
+        let stNodeHeight = stNode.getBoundingClientRect().height || 22;
         // let stNodeLineHeight = stNodeStyles.lineHeight
         // stNodeLineHeight = stNodeLineHeight.slice(0, stNodeLineHeight.length - 2)
         // if (!!this.lineHeight) {
         //   stNodeLineHeight = !!this.lineHeight.indexOf('px') ? this.lineHeight.slice(0, this.lineHeight.length - 2) : this.lineHeight
         // }
 
-        const stNodeLineHeight = this.lineHeight.slice(0, this.lineHeight.length - 2)
-        const maxHeight = stNodeLineHeight * this.lineClamp
+        const stNodeLineHeight = this.lineHeight.slice(0, this.lineHeight.length - 2);
+        const maxHeight = stNodeLineHeight * this.lineClamp;
 
-        if (stNodeHeight <= maxHeight) {
-          return false
-        } else {
+        if (stNodeHeight > maxHeight) {
           while (Math.abs(endPos - startPos) > 1) {
             const half = Math.ceil((endPos + startPos) / 2)
             const newhtml = html.substring(0, half)
             stNode.innerHTML = newhtml
             stNodeHeight = stNode.getBoundingClientRect().height || 22
-
             if (stNodeHeight <= maxHeight) {
-              startPos = half
+              startPos = half;
             } else {
-              endPos = half
+              endPos = half;
             }
           }
 
           while (stNodeHeight > maxHeight) {
-            const newhtml = stNode.innerHTML.substring(0, stNode.innerHTML.trimRight().length - 1)
-            stNode.innerHTML = newhtml
-            stNodeHeight = stNode.getBoundingClientRect().height || 22
+            const newHtml = stNode.innerHTML.substring(0, stNode.innerHTML.trimRight().length - 1);
+            stNode.innerHTML = newHtml;
+            stNodeHeight = stNode.getBoundingClientRect().height || 22;
           }
 
           const endStr = !!this.endHtml ? this.endHtml.replace(/<[^>]+>/g,"") : ''
-          const endLen = endStr.length + this.endChar.length
+          const endLen = this.endChar === '...' ? 3 : endStr.length + this.endChar.length;
           // 计算被截掉部分的空格
           const stNodeLen = stNode.innerHTML.trimRight().length;
           const stNodeDelStr = stNode.innerHTML.substring(stNodeLen - endLen, stNodeLen);
-          const extraLen = stNodeDelStr.match(/\s+/g).length;
-          const newhtml = stNode.innerHTML.substring(0, stNodeLen - endLen - extraLen) + this.endChar + this.endHtml
-          stNode.innerHTML = newhtml
+          const match = stNodeDelStr.match(/\s+/g);
+          const extraLen = match && match.length ? match.length : 0;
+          const newHtml = stNode.innerHTML.substring(0, stNodeLen - endLen - extraLen) + this.endChar + this.endHtml;
+          stNode.innerHTML = newHtml;
         }
       },
       handleClick(e) {
