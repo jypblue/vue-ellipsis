@@ -36,7 +36,7 @@
         const stNode = this.$refs.sentence;
         const html = this.data;
         if (html.length === 0) {
-          throw new Error('the String is empty');
+          console.error('the String is empty');
           return false;
         }
         stNode.innerHTML = html;
@@ -91,12 +91,18 @@
       }
     },
     watch: {
-      data () {
-        this.handleSubstrSentence()
+      data: {
+        immediate: true,
+        deep: true,
+        handler(value) {
+          window.setTimeout(() => {
+            this.handleSubstrSentence();
+          }, 300);
+        }
       }
     },
     mounted () {
-      this.handleSubstrSentence()
+     // this.handleSubstrSentence()
     },
     template: `
     <div ref="sentence" @click="handleClick"></div>
