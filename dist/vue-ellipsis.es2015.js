@@ -49,7 +49,7 @@ function plugin(Vue) {
         var stNode = this.$refs.sentence;
         var html = this.data;
         if (html.length === 0) {
-          throw new Error('the String is empty');
+          console.error('the String is empty');
           return false;
         }
         stNode.innerHTML = html;
@@ -103,12 +103,20 @@ function plugin(Vue) {
       }
     },
     watch: {
-      data: function () {
-        this.handleSubstrSentence();
+      data: {
+        immediate: true,
+        deep: true,
+        handler: function (value) {
+          var _this = this;
+
+          window.setTimeout(function () {
+            _this.handleSubstrSentence();
+          }, 300);
+        }
       }
     },
     mounted: function () {
-      this.handleSubstrSentence();
+      // this.handleSubstrSentence()
     },
 
     template: '\n    <div ref="sentence" @click="handleClick"></div>\n    '
