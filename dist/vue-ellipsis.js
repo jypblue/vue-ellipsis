@@ -1,7 +1,7 @@
 
   /* !
 
-  * vue-ellipsis v1.1.2
+  * vue-ellipsis v1.1.4
 
   * https://github.com/jypblue/vue-ellipsis
 
@@ -76,11 +76,10 @@ function plugin(Vue) {
 
         if (stNodeHeight > maxHeight) {
           while (Math.abs(endPos - startPos) > 1) {
-            var half = Math.ceil((endPos + startPos) / 2, 10);
-            var _newHtml = html.substring(0, half);
-            stNode.innerHTML = _newHtml;
+            var half = Math.ceil((endPos + startPos) / 2);
+            var newhtml = html.substring(0, half);
+            stNode.innerHTML = newhtml;
             stNodeHeight = stNode.getBoundingClientRect().height || 22;
-
             if (stNodeHeight <= maxHeight) {
               startPos = half;
             } else {
@@ -89,8 +88,8 @@ function plugin(Vue) {
           }
 
           while (stNodeHeight > maxHeight) {
-            var _newHtml2 = stNode.innerHTML.substring(0, stNode.innerHTML.trimRight().length - 1);
-            stNode.innerHTML = _newHtml2;
+            var _newHtml = stNode.innerHTML.substring(0, stNode.innerHTML.trimRight().length - 1);
+            stNode.innerHTML = _newHtml;
             stNodeHeight = stNode.getBoundingClientRect().height || 22;
           }
 

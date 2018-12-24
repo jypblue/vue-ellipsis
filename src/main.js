@@ -57,11 +57,10 @@
 
         if (stNodeHeight > maxHeight) {
           while (Math.abs(endPos - startPos) > 1) {
-            const half = Math.ceil((endPos + startPos) / 2, 10);
-            const newHtml = html.substring(0, half);
-            stNode.innerHTML = newHtml;
-            stNodeHeight = stNode.getBoundingClientRect().height || 22;
-
+            const half = Math.ceil((endPos + startPos) / 2)
+            const newhtml = html.substring(0, half)
+            stNode.innerHTML = newhtml
+            stNodeHeight = stNode.getBoundingClientRect().height || 22
             if (stNodeHeight <= maxHeight) {
               startPos = half;
             } else {
