@@ -63,6 +63,10 @@ handleClick: click callback function
 
 ## Update Log
 
+- version 1.1.6 => change console.log tips.
+
+- version 1.1.5 => fix a bug about data change error show.
+
 - version 1.1.3 => change build config to fix a bug about vue runtime-only build.
 
 - version 1.1.2 => fix a bug about str length can't get.

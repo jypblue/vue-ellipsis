@@ -1,6 +1,6 @@
 /**
  * @author zx.wang(zx.wang1991@gmail.com)
- * @version 1.0.0
+ * @version 1.1.5
  */
 
  function plugin(Vue) {
@@ -36,7 +36,11 @@
         const stNode = this.$refs.sentence;
         const html = this.data;
         if (html.length === 0) {
-          console.error('the String is empty');
+          console.log('the String is empty');
+          return false;
+        }
+        if (!stNode) {
+          console.warn('can not get this dom');
           return false;
         }
         stNode.innerHTML = html;
@@ -94,14 +98,16 @@
         immediate: true,
         deep: true,
         handler(value) {
-          window.setTimeout(() => {
+          this.$nextTick(()=>{
             this.handleSubstrSentence();
-          }, 300);
+          })
         }
       }
     },
     mounted () {
-     // this.handleSubstrSentence()
+      // this.$nextTick(()=>{
+      //   this.handleSubstrSentence();
+      // })
     },
     template: `
     <div ref="sentence" @click="handleClick"></div>

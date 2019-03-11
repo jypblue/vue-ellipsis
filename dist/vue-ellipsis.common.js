@@ -1,7 +1,7 @@
 
   /* !
 
-  * vue-ellipsis v1.1.4
+  * vue-ellipsis v1.1.5
 
   * https://github.com/jypblue/vue-ellipsis
 
@@ -15,7 +15,7 @@
 
 /**
  * @author zx.wang(zx.wang1991@gmail.com)
- * @version 1.0.0
+ * @version 1.1.5
  */
 
 function plugin(Vue) {
@@ -51,7 +51,11 @@ function plugin(Vue) {
         var stNode = this.$refs.sentence;
         var html = this.data;
         if (html.length === 0) {
-          console.error('the String is empty');
+          console.log('the String is empty');
+          return false;
+        }
+        if (!stNode) {
+          console.warn('can not get this dom');
           return false;
         }
         stNode.innerHTML = html;
@@ -111,14 +115,16 @@ function plugin(Vue) {
         handler: function (value) {
           var _this = this;
 
-          window.setTimeout(function () {
+          this.$nextTick(function () {
             _this.handleSubstrSentence();
-          }, 300);
+          });
         }
       }
     },
     mounted: function () {
-      // this.handleSubstrSentence()
+      // this.$nextTick(()=>{
+      //   this.handleSubstrSentence();
+      // })
     },
 
     template: '\n    <div ref="sentence" @click="handleClick"></div>\n    '
