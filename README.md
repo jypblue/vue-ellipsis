@@ -26,14 +26,14 @@ $ bower install vue-ellipsis
 
 ## Ellipsis Component Attributes
 
-| 参数        | 说明           | 类型               | 默认值       |  必写   |
+| Parameter        | Description           | Type               | Default       |  Required   |
 |------------|----------------|--------------------|--------------|----------------|
-| data | 需要添加省略号的内容 | String | -   | true |
-| line-clamp  | 显示几行 | Number | 1  | true |
-| line-height | 单行高度(设定时与实际单行高度一致，若使用rem请自行计算转换)  | String | '22px'   | true |
-| end-char | 句子末尾跟随字符串 | String |'...'| false |
-| end-html | 句子末尾跟随HTML片段 | String| - | false |
-| click | 点击回调函数 |  Function | - | false |
+| data | The string data that need to add ellipsis | String | -   | true |
+| line-clamp  | Number of lines to display | Number | 1  | true |
+| line-height | Single line height (please calculate the corresponding px value)  | String | '22px'   | true |
+| end-char | String at the end of the sentence | String |'...'| false |
+| end-html | HTML element at the end of the sentence | String| - | false |
+| click | Click callback function |  Function | - | false |
 
 
 ## How To Use
