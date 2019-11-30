@@ -1,7 +1,7 @@
 
   /* !
 
-  * vue-ellipsis v1.1.5
+  * vue-ellipsis v1.1.7
 
   * https://github.com/jypblue/vue-ellipsis
 
@@ -44,6 +44,14 @@ function plugin(Vue) {
       endHtml: {
         type: String,
         default: ''
+      },
+      onresize: {
+        type: Boolean,
+        default: true
+      },
+      delayTime: {
+        type: Number,
+        default: 20
       }
     },
     methods: {
@@ -106,6 +114,15 @@ function plugin(Vue) {
       },
       handleClick: function (e) {
         this.$emit('click', e);
+      },
+      onWindowResize: function () {
+        var _this = this;
+
+        window.onresize = function () {
+          setTimeout(function () {
+            _this.handleSubstrSentence();
+          }, _this.delayTime || 0);
+        };
       }
     },
     watch: {
@@ -113,18 +130,16 @@ function plugin(Vue) {
         immediate: true,
         deep: true,
         handler: function (value) {
-          var _this = this;
+          var _this2 = this;
 
           this.$nextTick(function () {
-            _this.handleSubstrSentence();
+            _this2.handleSubstrSentence();
           });
         }
       }
     },
     mounted: function () {
-      // this.$nextTick(()=>{
-      //   this.handleSubstrSentence();
-      // })
+      this.onresize && this.onWindowResize();
     },
 
     template: '\n    <div ref="sentence" @click="handleClick"></div>\n    '

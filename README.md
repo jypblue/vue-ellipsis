@@ -33,6 +33,8 @@ $ bower install vue-ellipsis
 | line-height | Single line height (please calculate the corresponding px value)  | String | '22px'   | true |
 | end-char | String at the end of the sentence | String |'...'| false |
 | end-html | HTML element at the end of the sentence | String| - | false |
+| onresize | Whether to respond to window onresize event | boolean | true | false |
+| delayTime | respond to window onresize event delay time | Number | 20 | false |
 | click | Click callback function |  Function | - | false |
 
 
@@ -62,6 +64,7 @@ handleClick: click callback function
 ```
 
 ## Update Log
+- version 1.1.7 => respond to window onresize event.
 
 - version 1.1.6 => change console.log tips.
 

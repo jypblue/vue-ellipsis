@@ -29,6 +29,14 @@
       endHtml: {
         type: String,
         default: ''
+      },
+      onresize: {
+        type: Boolean,
+        default: true
+      },
+      delayTime: {
+        type: Number,
+        default: 20
       }
     },
     methods: {
@@ -91,7 +99,14 @@
       },
       handleClick(e) {
         this.$emit('click', e)
-      }
+      },
+      onWindowResize() {
+        window.onresize = () => {
+          setTimeout(() => {
+            this.handleSubstrSentence();
+          }, this.delayTime || 0);
+        }
+      },
     },
     watch: {
       data: {
@@ -105,9 +120,7 @@
       }
     },
     mounted () {
-      // this.$nextTick(()=>{
-      //   this.handleSubstrSentence();
-      // })
+      this.onresize && this.onWindowResize()
     },
     template: `
     <div ref="sentence" @click="handleClick"></div>
