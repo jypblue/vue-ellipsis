@@ -1,7 +1,7 @@
 
   /* !
 
-  * vue-ellipsis v1.1.7
+  * vue-ellipsis v1.2.0
 
   * https://github.com/jypblue/vue-ellipsis
 
@@ -44,10 +44,6 @@ function plugin(Vue) {
       endHtml: {
         type: String,
         default: ''
-      },
-      onresize: {
-        type: Boolean,
-        default: true
       },
       delayTime: {
         type: Number,
@@ -139,7 +135,7 @@ function plugin(Vue) {
       }
     },
     mounted: function () {
-      this.onresize && this.onWindowResize();
+      this.onWindowResize();
     },
 
     template: '\n    <div ref="sentence" @click="handleClick"></div>\n    '

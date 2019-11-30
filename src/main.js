@@ -1,6 +1,6 @@
 /**
  * @author zx.wang(zx.wang1991@gmail.com)
- * @version 1.1.5
+ * @version 1.2.0
  */
 
  function plugin(Vue) {
@@ -29,10 +29,6 @@
       endHtml: {
         type: String,
         default: ''
-      },
-      onresize: {
-        type: Boolean,
-        default: true
       },
       delayTime: {
         type: Number,
@@ -120,7 +116,7 @@
       }
     },
     mounted () {
-      this.onresize && this.onWindowResize()
+      this.onWindowResize()
     },
     template: `
     <div ref="sentence" @click="handleClick"></div>
