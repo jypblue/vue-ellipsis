@@ -33,42 +33,45 @@
       delayTime: {
         type: Number,
         default: 20
+      },
+      debug: {
+        type: Boolean,
+        default: false
       }
     },
     methods: {
       handleSubstrSentence () {
+
         const stNode = this.$refs.sentence;
         const html = this.data;
-        if (html.length === 0) {
-          console.log('the String is empty');
+
+        if (this.debug && html.length === 0) {
+          console.info('vue-ellipsis: Skipping empty string.');
           return false;
         }
-        if (!stNode) {
-          console.warn('can not get this dom');
+
+        if (this.debug && !stNode) {
+          console.warn('vue-ellipsis: Can not get this dom.');
           return false;
         }
+        
         stNode.innerHTML = html;
-        // 开始及结束位置
+
+        // Start and end positions
         let startPos = 0;
         let endPos = html.length;
-        // css 必须设置line-height 不然会报错
-        //let stNodeStyles = window.getComputedStyle(stNode, null)
-        let stNodeHeight = stNode.getBoundingClientRect().height || 22;
-        // let stNodeLineHeight = stNodeStyles.lineHeight
-        // stNodeLineHeight = stNodeLineHeight.slice(0, stNodeLineHeight.length - 2)
-        // if (!!this.lineHeight) {
-        //   stNodeLineHeight = !!this.lineHeight.indexOf('px') ? this.lineHeight.slice(0, this.lineHeight.length - 2) : this.lineHeight
-        // }
 
-        const stNodeLineHeight = this.lineHeight.slice(0, this.lineHeight.length - 2);
+        // CSS must set line-height, otherwise it will report an error
+        const stNodeLineHeight =  this.lineHeight.slice(0, this.lineHeight.length - 2);
+        let stNodeHeight = stNode.getBoundingClientRect().height || stNodeLineHeight;
         const maxHeight = stNodeLineHeight * this.lineClamp;
 
         if (stNodeHeight > maxHeight) {
           while (Math.abs(endPos - startPos) > 1) {
-            const half = Math.ceil((endPos + startPos) / 2)
-            const newhtml = html.substring(0, half)
-            stNode.innerHTML = newhtml
-            stNodeHeight = stNode.getBoundingClientRect().height || 22
+            const half = Math.ceil((endPos + startPos) / 2);
+            const newhtml = html.substring(0, half);
+            stNode.innerHTML = newhtml;
+            stNodeHeight = stNode.getBoundingClientRect().height || stNodeLineHeight;
             if (stNodeHeight <= maxHeight) {
               startPos = half;
             } else {
@@ -79,12 +82,12 @@
           while (stNodeHeight > maxHeight) {
             const newHtml = stNode.innerHTML.substring(0, stNode.innerHTML.trimRight().length - 1);
             stNode.innerHTML = newHtml;
-            stNodeHeight = stNode.getBoundingClientRect().height || 22;
+            stNodeHeight = stNode.getBoundingClientRect().height || stNodeLineHeight;
           }
 
-          const endStr = !!this.endHtml ? this.endHtml.replace(/<[^>]+>/g,"") : ''
+          const endStr = !!this.endHtml ? this.endHtml.replace(/<[^>]+>/g,"") : '';
           const endLen = this.endChar === '...' ? 3 : endStr.length + this.endChar.length;
-          // 计算被截掉部分的空格
+          // Calculate truncated spaces
           const stNodeLen = stNode.innerHTML.trimRight().length;
           const stNodeDelStr = stNode.innerHTML.substring(stNodeLen - endLen, stNodeLen);
           const match = stNodeDelStr.match(/\s+/g);
@@ -94,7 +97,7 @@
         }
       },
       handleClick(e) {
-        this.$emit('click', e)
+        this.$emit('click', e);
       },
       onWindowResize() {
         window.onresize = () => {
@@ -109,20 +112,19 @@
         immediate: true,
         deep: true,
         handler(value) {
-          this.$nextTick(()=>{
+          this.$nextTick(() => {
             this.handleSubstrSentence();
           })
         }
       }
     },
     mounted () {
-      this.onWindowResize()
+      this.onWindowResize();
     },
     template: `
     <div ref="sentence" @click="handleClick"></div>
     `
-   })
-
+   });
  }
 
 if (typeof window !== 'undefined' && window.Vue) {
