@@ -106,11 +106,11 @@
         this.$emit('click', e);
       },
       onWindowResize() {
-        window.onresize = () => {
+        window.addEventListener('resize', () => {
           setTimeout(() => {
             this.handleSubstrSentence();
           }, this.delayTime || 0);
-        }
+        });
       },
     },
     watch: {
