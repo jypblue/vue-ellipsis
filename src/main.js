@@ -45,13 +45,19 @@
         const stNode = this.$refs.sentence;
         const html = this.data;
 
-        if (this.debug && html.length === 0) {
-          console.info('vue-ellipsis: Skipping empty string.');
+        if (html.length === 0) {
+         
+          if (this.debug) {
+            console.info('vue-ellipsis: Skipping empty string.');
+          }
           return false;
         }
 
-        if (this.debug && !stNode) {
-          console.warn('vue-ellipsis: Can not get this dom.');
+        if (!stNode) {
+         
+          if (this.debug) {
+            console.warn('vue-ellipsis: Can not get this dom.');
+          }
           return false;
         }
         
@@ -100,11 +106,11 @@
         this.$emit('click', e);
       },
       onWindowResize() {
-        window.onresize = () => {
+        window.addEventListener('resize', () => {
           setTimeout(() => {
             this.handleSubstrSentence();
           }, this.delayTime || 0);
-        }
+        });
       },
     },
     watch: {
